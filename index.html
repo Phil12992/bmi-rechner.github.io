@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>BMI Rechner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+      background: #f0f0f0;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      max-width: 400px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input[type="range"] {
+      width: 100%;
+    }
+    .value {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>BMI Rechner</h2>
+
+    <label>Alter: <span id="alterWert">25</span> Jahre</label><br>
+    <input type="range" id="alter" min="10" max="100" value="25"><br><br>
+
+    <label>Größe: <span id="groesseWert">170</span> cm</label><br>
+    <input type="range" id="groesse" min="100" max="220" value="170"><br><br>
+
+    <label>Gewicht: <span id="gewichtWert">70</span> kg</label><br>
+    <input type="range" id="gewicht" min="30" max="150" value="70"><br><br>
+
+    <h3 id="bmiErgebnis">Dein BMI beträgt: </h3>
+    <p id="bmiKategorie"></p>
+  </div>
+
+  <script>
+    const alter = document.getElementById("alter");
+    const groesse = document.getElementById("groesse");
+    const gewicht = document.getElementById("gewicht");
+
+    const alterWert = document.getElementById("alterWert");
+    const groesseWert = document.getElementById("groesseWert");
+    const gewichtWert = document.getElementById("gewichtWert");
+
+    const bmiErgebnis = document.getElementById("bmiErgebnis");
+    const bmiKategorie = document.getElementById("bmiKategorie");
+
+    function berechneBMI() {
+      const a = parseInt(alter.value);
+      const g = parseInt(groesse.value);
+      const w = parseInt(gewicht.value);
+
+      alterWert.textContent = `${a}`;
+      groesseWert.textContent = `${g}`;
+      gewichtWert.textContent = `${w}`;
+
+      const bmi = w / ((g / 100) ** 2);
+      const bmiRound = bmi.toFixed(2);
+      bmiErgebnis.textContent = `Dein BMI beträgt: ${bmiRound}`;
+
+      let kategorie = "";
+
+      if (a < 18) {
+        kategorie = "BMI unter 18 wird individuell bewertet.";
+      } else if (a <= 29) {
+        kategorie = bmi < 18.5 ? "Untergewicht" :
+                    bmi < 24.9 ? "Normalgewicht" : "Übergewicht";
+      } else if (a <= 39) {
+        kategorie = bmi < 19 ? "Untergewicht" :
+                    bmi < 25.5 ? "Normalgewicht" : "Übergewicht";
+      } else if (a <= 49) {
+        kategorie = bmi < 20 ? "Untergewicht" :
+                    bmi < 26 ? "Normalgewicht" : "Übergewicht";
+      } else if (a <= 59) {
+        kategorie = bmi < 21 ? "Untergewicht" :
+                    bmi < 27 ? "Normalgewicht" : "Übergewicht";
+      } else if (a <= 69) {
+        kategorie = bmi < 22 ? "Untergewicht" :
+                    bmi < 28 ? "Normalgewicht" : "Übergewicht";
+      } else {
+        kategorie = bmi < 22 ? "Untergewicht" :
+                    bmi < 29 ? "Normalgewicht" : "Übergewicht";
+      }
+
+      bmiKategorie.textContent = `Kategorie: ${kategorie}`;
+    }
+
+    alter.addEventListener("input", berechneBMI);
+    groesse.addEventListener("input", berechneBMI);
+    gewicht.addEventListener("input", berechneBMI);
+
+    berechneBMI(); // Initial berechnen
+  </script>
+</body>
+</html>
